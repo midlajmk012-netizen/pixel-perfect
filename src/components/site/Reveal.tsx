@@ -21,7 +21,7 @@ export function Reveal({
   className?: string;
   as?: "div" | "span" | "li";
 }) {
-  const Comp = motion[as];
+  const Comp = as === "span" ? motion.span : as === "li" ? motion.li : motion.div;
   return (
     <Comp
       className={className}

@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ResumeRouteImport } from './routes/resume'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as PortfolioIndexRouteImport } from './routes/portfolio.index'
 import { Route as PortfolioSlugRouteImport } from './routes/portfolio.$slug'
@@ -23,6 +25,16 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResumeRoute = ResumeRouteImport.update({
+  id: '/resume',
+  path: '/resume',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesRoute = ServicesRouteImport.update({
@@ -44,6 +56,8 @@ const PortfolioSlugRoute = PortfolioSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/resume': typeof ResumeRoute
   '/services': typeof ServicesRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
   '/portfolio/': typeof PortfolioIndexRoute
@@ -51,6 +65,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/resume': typeof ResumeRoute
   '/services': typeof ServicesRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
   '/portfolio': typeof PortfolioIndexRoute
@@ -59,19 +75,37 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/resume': typeof ResumeRoute
   '/services': typeof ServicesRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
   '/portfolio/': typeof PortfolioIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/services' | '/portfolio/$slug' | '/portfolio/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/resume'
+    | '/services'
+    | '/portfolio/$slug'
+    | '/portfolio/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/services' | '/portfolio/$slug' | '/portfolio'
+  to:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/resume'
+    | '/services'
+    | '/portfolio/$slug'
+    | '/portfolio'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/contact'
+    | '/resume'
     | '/services'
     | '/portfolio/$slug'
     | '/portfolio/'
@@ -80,6 +114,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ContactRoute: typeof ContactRoute
+  ResumeRoute: typeof ResumeRoute
   ServicesRoute: typeof ServicesRoute
   PortfolioSlugRoute: typeof PortfolioSlugRoute
   PortfolioIndexRoute: typeof PortfolioIndexRoute
@@ -99,6 +135,20 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resume': {
+      id: '/resume'
+      path: '/resume'
+      fullPath: '/resume'
+      preLoaderRoute: typeof ResumeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services': {
@@ -128,6 +178,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ContactRoute: ContactRoute,
+  ResumeRoute: ResumeRoute,
   ServicesRoute: ServicesRoute,
   PortfolioSlugRoute: PortfolioSlugRoute,
   PortfolioIndexRoute: PortfolioIndexRoute,
